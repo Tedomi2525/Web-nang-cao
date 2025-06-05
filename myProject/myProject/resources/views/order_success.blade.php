@@ -1,6 +1,8 @@
 {{-- resources/views/order_success.blade.php --}}
 @extends('layouts.app') {{-- Nếu bạn dùng layout chung, thay bằng layout bạn có. Nếu không dùng thì xóa dòng này --}}
 
+@section('title', 'Hoàn thành đơn hàng - Teddy Paradise')
+
 @section('content')
 
     <div class="grid">
@@ -9,7 +11,7 @@
             <i class="cart_header-arrow fa-solid fa-chevron-right"></i>
             <a href="{{ url('/payment') }}" class="cart_header-payment">CHI TIẾT THANH TOÁN</a>
             <i class="cart_header-arrow fa-solid fa-chevron-right"></i>
-            <a href="{{ url('/order_success') }}" class="cart_header-success">HOÀN THÀNH ĐƠN HÀNG</a>
+            <a href="{{ url('/order-success') }}" class="cart_header-success">HOÀN THÀNH ĐƠN HÀNG</a>
             <i class="cart_header-arrow fa-solid fa-chevron-right"></i>
         </div>
 

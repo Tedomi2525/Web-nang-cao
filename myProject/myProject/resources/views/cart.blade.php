@@ -11,7 +11,7 @@
         <i class="cart_header-arrow fa-solid fa-chevron-right"></i>
         <a href="{{ url('/payment') }}" class="cart_header-payment">CHI TIẾT THANH TOÁN</a>
         <i class="cart_header-arrow fa-solid fa-chevron-right"></i>
-        <a href="{{ url('/order_success') }}" class="cart_header-success">HOÀN THÀNH ĐƠN HÀNG</a>
+        <a href="{{ url('/order-success') }}" class="cart_header-success">HOÀN THÀNH ĐƠN HÀNG</a>
         <i class="cart_header-arrow fa-solid fa-chevron-right"></i>
     </div>
 

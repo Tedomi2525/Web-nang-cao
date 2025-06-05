@@ -1,87 +1,47 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const cartSummary = document.getElementById("cart-summary");
-    const totalPrice = document.getElementById("total-price");
-    const paymentForm = document.getElementById("payment-form");
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('payment-form');
+    const messageDiv = document.getElementById('payment-message');
+    const errorDiv = document.getElementById('payment-error');
 
-    // Lấy dữ liệu giỏ hàng từ biến toàn cục do Blade nhúng vào
-    const cart = window.cartData || [];
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-    // Hiển thị giỏ hàng
-    let total = 0;
-    if (cart.length === 0) {
-        cartSummary.innerHTML = "<li>🛒 Giỏ hàng của bạn đang trống.</li>";
-    } else {
-        cartSummary.innerHTML = "";
-        cart.forEach(item => {
-            const itemTotal = item.price * item.quantity;
-            total += itemTotal;
+        messageDiv.style.display = 'none';
+        errorDiv.style.display = 'none';
 
-            const li = document.createElement("li");
-            li.textContent = `${item.name} x${item.quantity} - ${itemTotal.toLocaleString("vi-VN")} VND`;
-            cartSummary.appendChild(li);
-        });
-    }
-    totalPrice.textContent = total.toLocaleString("vi-VN");
+        const formData = new FormData(form);
 
-    // Xử lý gửi đơn hàng
-    if (paymentForm) {
-        paymentForm.addEventListener("submit", async (e) => {
-            e.preventDefault();
+        try {
+            const response = await fetch('/payment/submit', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept': 'application/json',
+                },
+                body: formData
+            });
 
-            const name = document.getElementById("name")?.value.trim();
-            const phone = document.getElementById("phone")?.value.trim();
-            const address = document.getElementById("address")?.value.trim();
-            const paymentMethod = document.querySelector('input[name="payment_method"]:checked')?.value;
-            const submitBtn = paymentForm.querySelector("button[type='submit']");
-
-            // Kiểm tra dữ liệu đầu vào
-            if (!name || !phone || !address || !paymentMethod) {
-                alert("⚠️ Vui lòng điền đầy đủ thông tin trước khi thanh toán.");
-                return;
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Lỗi không xác định');
             }
 
-            const phoneRegex = /^0\d{9}$/;
-            if (!phoneRegex.test(phone)) {
-                alert("⚠️ Số điện thoại không hợp lệ. Vui lòng nhập lại số có 10 chữ số và bắt đầu bằng 0.");
-                return;
+            const data = await response.json();
+
+            if (data.success) {
+                messageDiv.textContent = data.message || 'Thanh toán thành công!';
+                messageDiv.style.display = 'block';
+
+                // Clear cart UI or redirect user to page hoàn thành đơn hàng
+                setTimeout(() => {
+                    window.location.href = '/order-success';
+                }, 1500);
+            } else {
+                throw new Error(data.message || 'Thanh toán thất bại');
             }
-
-            // Disable nút gửi để tránh gửi nhiều lần
-            submitBtn.disabled = true;
-            const originalText = submitBtn.textContent;
-            submitBtn.textContent = "⏳ Đang xử lý...";
-
-            try {
-                const response = await fetch("/payment/submit", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]')?.content || "",
-                    },
-                    body: JSON.stringify({
-                        name,
-                        phone,
-                        address,
-                        payment_method: paymentMethod,
-                        cart,
-                    }),
-                });
-
-                const data = await response.json();
-
-                if (response.ok && data.success) {
-                    alert(`✅ Thanh toán thành công! Tổng tiền: ${data.total_price.toLocaleString("vi-VN")} VND`);
-                    window.location.href = "/order-success";
-                } else {
-                    alert(data.message || "❌ Thanh toán thất bại. Vui lòng thử lại.");
-                }
-            } catch (err) {
-                console.error("Lỗi khi gửi thanh toán:", err);
-                alert("⚠️ Có lỗi xảy ra. Vui lòng kiểm tra kết nối mạng và thử lại.");
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = originalText;
-            }
-        });
-    }
+        } catch (error) {
+            errorDiv.textContent = error.message;
+            errorDiv.style.display = 'block';
+        }
+    });
 });

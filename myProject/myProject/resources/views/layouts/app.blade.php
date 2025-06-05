@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>@yield('title', 'Teddy Paradise')</title>
 
+    {{-- Thêm meta CSRF token để JS dễ lấy --}}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
     {{-- CSS --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
@@ -15,7 +18,8 @@
     {{-- Fonts --}}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700&display=swap"
+        rel="stylesheet" />
 </head>
 
 <body>
@@ -59,9 +63,7 @@
                         {{-- Nút tìm kiếm --}}
                         <div class="header_navbar-btn-item search-btn">
                             <button>
-                                <i class="fa-solid fa-magnifying-glass">
-                                    <img src="{{ asset('assets/img/search.png') }}" alt="">
-                                </i>
+                                <i class="fa-solid fa-magnifying-glass"></i>
                             </button>
                         </div>
 
@@ -118,8 +120,12 @@
     <script src="{{ asset('assets/js/search.js') }}"></script>
     <script src="{{ asset('assets/js/auth.js') }}"></script>
     <script src="{{ asset('assets/js/menu.js') }}"></script>
-    <script src="{{ asset('assets/js/payment.js') }}"></script>
     <script src="{{ asset('assets/js/order.js') }}"></script>
+
+    {{-- Chỉ load payment.js khi đang ở trang payment --}}
+    @if(request()->is('payment'))
+        <script src="{{ asset('assets/js/payment.js') }}"></script>
+    @endif
 </body>
 
 </html>

@@ -1,95 +1,57 @@
-@extends('layouts.app')
+<?php
 
-@section('title', 'Thanh Toán - Teddy Paradise')
+namespace App\Http\Controllers;
 
-@section('content')
-    <div class="grid">
-        <div class="cart_header">
-            <a href="{{ url('/cart') }}" class="cart_header-cart">GIỎ HÀNG</a>
-            <i class="cart_header-arrow fa-solid fa-chevron-right"></i>
-            <a href="{{ url('/payment') }}" class="cart_header-payment">CHI TIẾT THANH TOÁN</a>
-            <i class="cart_header-arrow fa-solid fa-chevron-right"></i>
-            <a href="{{ url('/order-success') }}" class="cart_header-success">HOÀN THÀNH ĐƠN HÀNG</a>
-        </div>
+use Illuminate\Http\Request;
 
-        <div class="payment">
-            <form id="payment-form">
-                @csrf
-                <h3>Thông Tin Giao Hàng</h3>
-                <label for="name">Họ và tên:</label>
-                <input type="text" id="name" name="name" placeholder="Nhập họ và tên" required />
+class PaymentController extends Controller
+{
+    // Hiển thị trang thanh toán
+    public function showPaymentForm()
+    {
+        // Lấy dữ liệu giỏ hàng từ session
+        $cart_data = session('cart', []);
 
-                <label for="phone">Số điện thoại:</label>
-                <input type="tel" id="phone" name="phone" placeholder="Nhập số điện thoại" required />
+        // Tính tổng tiền
+        $total_price = 0;
+        foreach ($cart_data as $item) {
+            $total_price += $item['price'] * $item['quantity'];
+        }
 
-                <label for="address">Địa chỉ giao hàng:</label>
-                <input type="text" id="address" name="address" placeholder="Nhập địa chỉ" required />
+        return view('payment', compact('cart_data', 'total_price'));
+    }
 
-                <h3>Phương Thức Thanh Toán</h3>
-                <label><input type="radio" name="payment_method" value="cod" checked /> Thanh toán khi nhận hàng (COD)</label><br />
-                <label><input type="radio" name="payment_method" value="bank" /> Chuyển khoản ngân hàng</label><br />
-                <label><input type="radio" name="payment_method" value="paypal" /> Thanh toán qua PayPal</label><br />
+    // Xử lý submit thanh toán
+    public function submitPayment(Request $request)
+    {
+        // Validate dữ liệu
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'phone' => 'required|string|max:20',
+            'address' => 'required|string|max:500',
+            'email' => 'nullable|email|max:255',
+            'payment_method' => 'required|in:cod,bank,paypal',
+        ]);
 
-                <h3>Tóm Tắt Đơn Hàng</h3>
-                <ul id="cart-summary">
-                    @forelse ($cart_data as $item)
-                        <li>
-                            <strong>{{ $item['name'] }}</strong> x{{ $item['quantity'] }} -
-                            {{ number_format($item['price'] * $item['quantity'], 0, ',', '.') }} VND
-                        </li>
-                    @empty
-                        <li>Giỏ hàng trống</li>
-                    @endforelse
-                </ul>
-                <p><strong>Tổng tiền: </strong>
-                    <span id="total-price">{{ number_format($total_price, 0, ',', '.') }}</span> VND
-                </p>
+        $cart_data = session('cart', []);
 
-                <button type="submit">Thanh Toán</button>
-            </form>
-        </div>
-    </div>
+        if (empty($cart_data)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Giỏ hàng trống, không thể thanh toán.'
+            ], 400);
+        }
 
-    <script>
-        const cartData = @json($cart_data);
+        // Ở đây bạn có thể xử lý logic lưu đơn hàng vào database (nếu cần)
+        // Hoặc xử lý thanh toán với các cổng thanh toán
 
-        document.getElementById('payment-form').addEventListener('submit', async function (e) {
-            e.preventDefault();
+        // Giả lập thành công:
+        // Xóa giỏ hàng sau khi thanh toán thành công
+        session()->forget('cart');
 
-            const form = e.target;
-
-            const formData = {
-                name: form.name.value,
-                phone: form.phone.value,
-                address: form.address.value,
-                payment_method: form.payment_method.value,
-                cart: cartData,
-                _token: '{{ csrf_token() }}'
-            };
-
-            try {
-                const response = await fetch('{{ route('payment.submit') }}', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                    },
-                    body: JSON.stringify(formData)
-                });
-
-                const result = await response.json();
-
-                if (result.success) {
-                    alert(result.message);
-                    window.location.href = '/order-success';
-                } else {
-                    alert(result.message || 'Thanh toán thất bại');
-                }
-
-            } catch (err) {
-                alert('Có lỗi xảy ra khi gửi yêu cầu.');
-                console.error(err);
-            }
-        });
-    </script>
-@endsection
+        return response()->json([
+            'success' => true,
+            'message' => 'Đơn hàng của bạn đã được xử lý thành công.'
+        ]);
+    }
+}

@@ -17,8 +17,8 @@ Route::get('/cart', function () {
 });
 
 // Trang thanh toán (hiển thị form + giỏ hàng)
-Route::get('/payment', [PaymentController::class, 'showPaymentForm']);
-Route::post('/payment/submit', [PaymentController::class, 'submitPayment']);
+Route::get('/payment', [PaymentController::class, 'showPaymentForm'])->name('payment.form');
+Route::post('/payment/submit', [PaymentController::class, 'submitPayment'])->name('payment.submit');
 Route::get('/order-success', function () {
     return view('order_success');
 });
