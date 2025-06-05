@@ -3,7 +3,6 @@
 @section('title', 'Thanh Toán - Teddy Paradise')
 
 @section('content')
-
     <div class="grid">
         <div class="cart_header">
             <a href="{{ url('/cart') }}" class="cart_header-cart">GIỎ HÀNG</a>
@@ -11,10 +10,10 @@
             <a href="{{ url('/payment') }}" class="cart_header-payment">CHI TIẾT THANH TOÁN</a>
             <i class="cart_header-arrow fa-solid fa-chevron-right"></i>
             <a href="{{ url('/order-success') }}" class="cart_header-success">HOÀN THÀNH ĐƠN HÀNG</a>
-            <i class="cart_header-arrow fa-solid fa-chevron-right"></i>
         </div>
+
         <div class="payment">
-            <form id="payment-form" method="POST" action="#">
+            <form id="payment-form">
                 @csrf
                 <h3>Thông Tin Giao Hàng</h3>
                 <label for="name">Họ và tên:</label>
@@ -27,8 +26,7 @@
                 <input type="text" id="address" name="address" placeholder="Nhập địa chỉ" required />
 
                 <h3>Phương Thức Thanh Toán</h3>
-                <label><input type="radio" name="payment_method" value="cod" checked /> Thanh toán khi nhận hàng
-                    (COD)</label><br />
+                <label><input type="radio" name="payment_method" value="cod" checked /> Thanh toán khi nhận hàng (COD)</label><br />
                 <label><input type="radio" name="payment_method" value="bank" /> Chuyển khoản ngân hàng</label><br />
                 <label><input type="radio" name="payment_method" value="paypal" /> Thanh toán qua PayPal</label><br />
 
@@ -52,4 +50,46 @@
         </div>
     </div>
 
+    <script>
+        const cartData = @json($cart_data);
+
+        document.getElementById('payment-form').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const form = e.target;
+
+            const formData = {
+                name: form.name.value,
+                phone: form.phone.value,
+                address: form.address.value,
+                payment_method: form.payment_method.value,
+                cart: cartData,
+                _token: '{{ csrf_token() }}'
+            };
+
+            try {
+                const response = await fetch('{{ route('payment.submit') }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    alert(result.message);
+                    window.location.href = '/order-success';
+                } else {
+                    alert(result.message || 'Thanh toán thất bại');
+                }
+
+            } catch (err) {
+                alert('Có lỗi xảy ra khi gửi yêu cầu.');
+                console.error(err);
+            }
+        });
+    </script>
 @endsection

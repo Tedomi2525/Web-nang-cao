@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\PaymentController;
 
 // Trang chính
 Route::get('/', function () {
@@ -15,22 +16,16 @@ Route::get('/cart', function () {
     return view('cart', compact('cart_data'));
 });
 
-// Trang thanh toán
-Route::get('/payment', function () {
-    $cart_data = session('cart', []);
-
-    // Tính tổng tiền
-    $total_price = collect($cart_data)->reduce(function ($total, $item) {
-        return $total + $item['price'] * $item['quantity'];
-    }, 0);
-
-    return view('payment', compact('cart_data', 'total_price'));
+// Trang thanh toán (hiển thị form + giỏ hàng)
+Route::get('/payment', [PaymentController::class, 'showPaymentForm']);
+Route::post('/payment/submit', [PaymentController::class, 'submitPayment']);
+Route::get('/order-success', function () {
+    return view('order_success');
 });
 
 // Các trang tĩnh
 Route::get('/contact', fn() => view('contact'));
 Route::get('/introduce', fn() => view('introduce'));
-Route::get('/order-success', fn() => view('order_success'));
 
 // Sản phẩm
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
