@@ -29,7 +29,7 @@
 ### Migrations (Order-table)
 ![order table](https://github.com/user-attachments/assets/1662403c-cf90-4dbf-bfb7-3ae531477a50)
 ### Blade ( Payment)
-![payment](https://github.com/user-attachments/assets/160f5106-71b7-4144-9c6a-47223148c08a)
+![payment](https://github.com/user-attachments/assets/454dac45-6d1a-4ea8-ace0-84e9fd694d18)
 ## Security Setup
 
 
