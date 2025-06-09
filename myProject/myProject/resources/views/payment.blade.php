@@ -13,7 +13,7 @@
     </div>
 
     <div class="payment">
-        <form id="payment-form">
+        <form id="payment-form" action="{{ route('order.store') }}" method="POST">
             @csrf
 
             <h3>Thông Tin Giao Hàng</h3>

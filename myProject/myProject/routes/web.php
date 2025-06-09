@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\OrderController;
+
 
 // Trang chính
 Route::get('/', function () {
@@ -36,6 +38,10 @@ Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add')
 Route::post('/cart/increase/{id}', [CartController::class, 'increaseQuantity']);
 Route::post('/cart/decrease/{id}', [CartController::class, 'decreaseQuantity']);
 Route::post('/cart/remove/{id}', [CartController::class, 'removeFromCart']);
+
+// Đặt hàng
+Route::post('/order/store', [OrderController::class, 'store'])->name('order.store');
+Route::get('/order-success', [OrderController::class, 'success'])->name('order.success');
 
 // Cần đăng nhập
 Route::middleware('auth')->group(function () {

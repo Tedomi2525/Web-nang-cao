@@ -15,9 +15,9 @@
             <i class="cart_header-arrow fa-solid fa-chevron-right"></i>
         </div>
 
-        <div class="container text-center py-5">
-            <h1 class="text-success">🎉 Đặt hàng thành công!</h1>
-            <p>Cảm ơn bạn đã mua sắm tại cửa hàng của chúng tôi.</p>
-            <a href="{{ url('/') }}" class="btn btn-primary mt-3">Quay về trang chủ</a>
+        <div class="grid" style="text-align: center; padding: 50px;">
+            <h1>Cảm ơn bạn đã đặt hàng!</h1>
+            <p>Chúng tôi sẽ xử lý đơn hàng của bạn trong thời gian sớm nhất.</p>
+            <a href="{{ url('/') }}">Quay về trang chủ</a>
         </div>
 @endsection

@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function() {
         if (cartStep) cartStep.style.color = "black"; // Trang giỏ hàng
     } else if (path.includes("/payment")) {
         if (paymentStep) paymentStep.style.color = "black"; // Trang thanh toán
-    } else if (path.includes("/success")) {
+    } else if (path.includes("/order-success")) {
         if (successStep) successStep.style.color = "black"; // Trang hoàn tất
     }
 });
