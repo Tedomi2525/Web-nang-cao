@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>@yield('title', 'Teddy Paradise')</title>
 
-    {{-- Thêm meta CSRF token để JS dễ lấy --}}
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     {{-- CSS --}}
@@ -63,8 +62,10 @@
                         {{-- Nút tìm kiếm --}}
                         <div class="header_navbar-btn-item search-btn">
                             <button>
-                                <i class="fa-solid fa-magnifying-glass"></i>
-                            </button>
+                                <i class="fa-solid fa-magnifying-glass">
+                                    <img src="{{ asset('assets/img/search.png')}}" alt="">
+
+                                </i></button>
                         </div>
 
                         <div class="header_navbar-search">
@@ -73,8 +74,22 @@
 
                         <div class="separator"></div>
 
-                        {{-- Nếu chưa đăng nhập --}}
+                        {{-- Nếu đã đăng nhập --}}
+                        @auth
+                            <div class="header_navbar-btn-item" style="display: flex; align-items: center; gap: 10px;">
+                                <button>
+                                    {{ Auth::user()->name }}
+                                </button>
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit">Đăng xuất</button>
+                                </form>
+                            </div>
+                            <div class="separator"></div>
+                        @endauth
+
                         @guest
+                            {{-- Nếu chưa đăng nhập --}}
                             <div class="header_navbar-btn-item">
                                 <a href="{{ route('login') }}">
                                     <button>Đăng nhập</button>
@@ -83,16 +98,6 @@
                             <div class="separator"></div>
                         @endguest
 
-                        {{-- Nếu đã đăng nhập --}}
-                        @auth
-                            <div class="header_navbar-btn-item">
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <button type="submit">Đăng xuất</button>
-                                </form>
-                            </div>
-                            <div class="separator"></div>
-                        @endauth
 
                         {{-- Giỏ hàng --}}
                         <div class="header_navbar-btn-item cart_shopping">
@@ -108,25 +113,18 @@
 
         {{-- Main content --}}
         <main class="grid main-content">
-            {{-- Hiển thị thông báo nếu có --}}
             @yield('content')
         </main>
 
         {{-- Footer --}}
         @include('layouts.footer')
-
     </div>
 
     {{-- Scripts --}}
     <script src="{{ asset('assets/js/search.js') }}"></script>
-    <script src="{{ asset('assets/js/auth.js') }}"></script>
     <script src="{{ asset('assets/js/menu.js') }}"></script>
     <script src="{{ asset('assets/js/order.js') }}"></script>
 
-    {{-- Chỉ load payment.js khi đang ở trang payment --}}
-    @if(request()->is('payment'))
-        <script src="{{ asset('assets/js/payment.js') }}"></script>
-    @endif
 </body>
 
 </html>

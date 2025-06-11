@@ -13,22 +13,40 @@
     </div>
 
     <div class="payment">
+        {{-- Hiển thị lỗi --}}
+        @if ($errors->any())
+            <div style="color: red;">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        {{-- Hiển thị thông báo thành công --}}
+        @if (session('success'))
+            <div style="color: green;">
+                {{ session('success') }}
+            </div>
+        @endif
+
         <form id="payment-form" action="{{ route('order.store') }}" method="POST">
             @csrf
 
             <h3>Thông Tin Giao Hàng</h3>
 
-            <label for="name">Họ và tên:</label>
-            <input type="text" id="name" name="name" placeholder="Nhập họ và tên" required />
+            <label for="customer_name">Họ và tên:</label>
+            <input type="text" id="customer_name" name="customer_name" placeholder="Nhập họ và tên" required />
 
-            <label for="phone">Số điện thoại:</label>
-            <input type="tel" id="phone" name="phone" placeholder="Nhập số điện thoại" required />
+            <label for="customer_phone">Số điện thoại:</label>
+            <input type="tel" id="customer_phone" name="customer_phone" placeholder="Nhập số điện thoại" />
 
-            <label for="address">Địa chỉ giao hàng:</label>
-            <input type="text" id="address" name="address" placeholder="Nhập địa chỉ" required />
+            <label for="customer_address">Địa chỉ giao hàng:</label>
+            <input type="text" id="customer_address" name="customer_address" placeholder="Nhập địa chỉ" />
 
-            <label for="email">Email (nếu có):</label>
-            <input type="text" id="email" name="email" placeholder="Nhập email" />
+            <label for="customer_email">Email (nếu có):</label>
+            <input type="text" id="customer_email" name="customer_email" placeholder="Nhập email" />
 
             <h3>Phương Thức Thanh Toán</h3>
             <label><input type="radio" name="payment_method" value="cod" checked /> Thanh toán khi nhận hàng (COD)</label><br />
@@ -53,13 +71,6 @@
 
             <button type="submit" {{ count($cart_data) === 0 ? 'disabled' : '' }}>Thanh Toán</button>
         </form>
-
-        <div id="payment-message" style="margin-top: 1em; color: green; display: none;"></div>
-        <div id="payment-error" style="margin-top: 1em; color: red; display: none;"></div>
     </div>
 </div>
-
-<script>
-    window.cartData = @json($cart_data);
-</script>
 @endsection

@@ -8,48 +8,48 @@ use Illuminate\Support\Facades\Session;
 
 class OrderController extends Controller
 {
+    // Lưu đơn hàng
     public function store(Request $request)
     {
-        // Validate form
-        $validated = $request->validate([
+        // Kiểm tra hợp lệ
+        $request->validate([
             'customer_name'    => 'required|string|max:255',
-            'customer_email'   => 'nullable|email|max:255',
-            'customer_phone'   => 'nullable|string|max:20',
-            'customer_address' => 'nullable|string',
-            'payment_method'   => 'required|string|in:cod,bank,paypal',
+            'customer_email'   => 'nullable|email',
+            'customer_phone'   => 'required|string|max:20',
+            'customer_address' => 'required|string|max:255',
+            'payment_method'   => 'required|in:cod,bank,paypal',
         ]);
 
-        // Lấy cart từ session
+        // Lấy giỏ hàng từ session
         $cart = Session::get('cart', []);
-
         if (empty($cart)) {
-            return redirect()->back()->with('error', 'Giỏ hàng trống.');
+            return redirect()->back()->withErrors(['Giỏ hàng trống!']);
         }
 
         // Tính tổng tiền
-        $totalAmount = 0;
-        foreach ($cart as $item) {
-            $totalAmount += $item['price'] * $item['quantity'];
-        }
+        $total = collect($cart)->sum(function ($item) {
+            return $item['price'] * $item['quantity'];
+        });
 
-        // Tạo order
-        $order = new Order();
-        $order->customer_name    = $validated['customer_name'];
-        $order->customer_email   = $validated['customer_email'] ?? null;
-        $order->customer_phone   = $validated['customer_phone'] ?? null;
-        $order->customer_address = $validated['customer_address'] ?? null;
-        $order->payment_method   = $validated['payment_method'];
-        $order->total_amount     = $totalAmount;
-        $order->status           = 'pending';
-        $order->save();
+        // Tạo đơn hàng mới
+        $order = Order::create([
+            'customer_name'    => $request->customer_name,
+            'customer_email'   => $request->customer_email,
+            'customer_phone'   => $request->customer_phone,
+            'customer_address' => $request->customer_address,
+            'payment_method'   => $request->payment_method,
+            'total_amount'     => $total,
+            'status'           => 'pending', // hoặc 'đang xử lý'
+        ]);
 
         // Xoá giỏ hàng
         Session::forget('cart');
 
-        // Redirect tới trang hoàn thành
+        // Điều hướng đến trang thành công
         return redirect()->route('order.success')->with('success', 'Đặt hàng thành công!');
     }
 
+    // Hiển thị trang thành công
     public function success()
     {
         return view('order_success');
