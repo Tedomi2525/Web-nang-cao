@@ -107,7 +107,8 @@
         </div>
 
         {{-- Main content --}}
-        <main class="grid">
+        <main class="grid main-content">
+            {{-- Hiển thị thông báo nếu có --}}
             @yield('content')
         </main>
 

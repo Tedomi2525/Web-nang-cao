@@ -2,6 +2,31 @@
 
 @section('title', 'Đăng ký')
 
+<style>
+    .main-content {
+        position: relative;
+        min-height: 100vh; /* nền phủ toàn trang */
+        
+    }
+
+    .main-content::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url('{{ asset('assets/img/DALL.png') }}');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 1200px auto; /* ảnh bé lại */
+        opacity: 0.2; /* mờ đi */
+        z-index: -1; /* nằm dưới nội dung */
+        pointer-events: none;
+    }
+</style>
+
+
 @section('content')
 <div class="modal js_modal" style="display: flex; position: relative;">
     <div class="modal_body" style="margin: auto; max-width: 500px;">
