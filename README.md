@@ -1,9 +1,20 @@
 # Project: Website bán gấu bông
-### Giới thiệu
+## Giới thiệu
+### Thông tin cá nhân
   1. Họ và tên sinh viên: Phạm Hồng Đức
   2. MSV 23010338
   3. Lớp: K17-CNTT4
   4. Môn học: Thiết kế web nâng cao(TH3)
+### Tóm tắt
+Dự án xây dựng website bán hàng “Teddy Paradise” được phát triển dựa trên framework Laravel của PHP nhằm cung cấp một nền tảng thương mại điện tử đơn giản, dễ sử dụng. Ứng dụng tích hợp các công nghệ như Laravel Breeze để xác thực người dùng, Eloquent ORM để thao tác với cơ sở dữ liệu MySQL trên nền tảng cloud Aiven, cùng với Blade Template Engine và Tailwind CSS cho giao diện người dùng hiện đại, thân thiện. Người dùng có thể xem sản phẩm, thêm vào giỏ hàng và thanh toán mà không cần đăng nhập. Hệ thống đảm bảo các yếu tố bảo mật quan trọng như xác thực, chống CSRF, quản lý phiên làm việc và kiểm tra dữ liệu đầu vào. Dự án minh họa các thao tác CRUD cơ bản đối với sản phẩm, đồng thời mô hình hóa rõ ràng luồng hoạt động và kiến trúc hệ thống qua sơ đồ UML, flowchart và cơ sở dữ liệu.
+  
+### Công nghệ được sử dụng
+1. PHP (Laravel framework)
+2. Laravel Breeze
+3. MySQL (Aiven Cloud)
+4. Eloquent ORM (Hệ thống ORM giúp tương tác với CSDL)
+5. Frontend & UI (Blade engine, Tailwind CSS)
+6. Laravel Security (CSRF, Auth, ...)
 ##  Sơ đồ khối
 ![image](https://github.com/user-attachments/assets/6061be48-5b07-4199-8fd2-467b983f99b9)
 ## Sơ đồ chức năng 
