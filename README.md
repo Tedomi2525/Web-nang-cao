@@ -32,6 +32,7 @@
 ![payment](https://github.com/user-attachments/assets/454dac45-6d1a-4ea8-ace0-84e9fd694d18)
 # Security Setup
 # Link
+### Link Repo: https://github.com/Tedomi2525/Web-nang-cao
 ### Link Demo (link youtube)
 ### Link Public
 # Một số hình ảnh chức năng chính 
