@@ -42,6 +42,17 @@ Dự án xây dựng website bán hàng “Teddy Paradise” được phát tri�
 ### Blade ( Payment)
 ![payment](https://github.com/user-attachments/assets/454dac45-6d1a-4ea8-ace0-84e9fd694d18)
 # Security Setup
+### CSRF
+![image](https://github.com/user-attachments/assets/bd64b98a-3bfd-4ff1-b8ee-1bda0dd703ad)
+### Input Validation
+![image](https://github.com/user-attachments/assets/d95973cd-7465-425b-ba2a-f8ba67f01c02)
+### SQL Injection
+![image](https://github.com/user-attachments/assets/6c75741d-9bfd-4329-b608-1bbb489da31c)
+### XSS
+![image](https://github.com/user-attachments/assets/a670d9a4-59b7-40fa-8883-6c2e7cdaba85)
+### Session & Cookie
+![image](https://github.com/user-attachments/assets/229268f9-39b8-429b-828e-df33512168af)
+### Authentication (Laravel Breeze)
 # Link
 ### Link Repo: https://github.com/Tedomi2525/Web-nang-cao
 ### Link Demo (link youtube)
