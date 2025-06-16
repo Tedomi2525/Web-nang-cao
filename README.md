@@ -55,7 +55,7 @@ Dự án xây dựng website bán hàng “Teddy Paradise” được phát tri�
 ### Authentication (Laravel Breeze)
 # Link
 ### Link Repo: https://github.com/Tedomi2525/Web-nang-cao
-### Link Demo (link youtube)
+### Link Demo (link youtube): https://www.youtube.com/watch?v=CFo7yaAWPu0
 ### Link Public
 # Một số hình ảnh chức năng chính 
 ### Index 
