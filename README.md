@@ -91,7 +91,7 @@ Người dùng có thể duyệt sản phẩm, thêm vào giỏ hàng và thanh 
 
 - 💻 **Source code:** [https://github.com/Tedomi2525/Web-nang-cao](https://github.com/Tedomi2525/Web-nang-cao)  
 - 🎬 **Demo Video:** [Xem trên YouTube](https://www.youtube.com/watch?v=CFo7yaAWPu0)  
-- 🌍 **Public Website:** *(Thêm link nếu có deploy)*
+- 🌍 **Public Website:** [https://web-nang-cao-main-exdywy.laravel.cloud/](https://web-nang-cao-main-exdywy.laravel.cloud/)
 
 ---
 
