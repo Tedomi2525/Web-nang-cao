@@ -2,7 +2,7 @@
 
 ## 👤 Thông tin sinh viên
 
-- **Họ và tên:** Phạm Hồng Đức  
+- **Họ và tên:** Phạm Hồng Đức   
 - **Mã sinh viên:** 23010338  
 - **Lớp:** K17-CNTT4  
 - **Môn học:** Thiết kế Web nâng cao (TH3)  
@@ -38,32 +38,24 @@ Người dùng có thể duyệt sản phẩm, thêm vào giỏ hàng và thanh 
 ---
 
 ## 🧩 Sơ đồ hệ thống
-
 ### Sơ đồ khối
 ![Sơ đồ khối](https://github.com/user-attachments/assets/6061be48-5b07-4199-8fd2-467b983f99b9)
-
 ### Sơ đồ chức năng
 ![Sơ đồ chức năng](https://github.com/user-attachments/assets/973c2243-6ba7-4de1-bc1a-b401c84590f7)
 
 ---
-
 ## 🔄 Sơ đồ thuật toán
 
 - **Duyệt sản phẩm:**  
   ![Browse Products](https://github.com/user-attachments/assets/2197b990-7727-4112-91ec-af36d21a97a1)
-
 - **Thêm vào giỏ hàng:**  
   ![Add to Cart](https://github.com/user-attachments/assets/d07f1e59-64ff-426d-82ba-faeabcb1cfc8)
-
 - **Xem giỏ hàng:**  
   ![View Cart](https://github.com/user-attachments/assets/8bb49cc6-9b6b-4182-bc84-479a04310968)
-
 - **Thanh toán:**  
   ![Checkout](https://github.com/user-attachments/assets/6439109c-03e1-454f-8bc5-4baed19a06dd)
-
 - **Đăng nhập/Đăng ký:**  
   ![Login/Register](https://github.com/user-attachments/assets/31ddbcf4-abf8-448d-bf1c-7bbb377d4692)
-
 - **CRUD Sản phẩm (Admin):**  
   ![Admin CRUD](https://github.com/user-attachments/assets/62836107-a20a-409e-8dc2-51e3ee4416d2)
 
@@ -73,13 +65,10 @@ Người dùng có thể duyệt sản phẩm, thêm vào giỏ hàng và thanh 
 
 - **Model – Order**
   ![Order Model](https://github.com/user-attachments/assets/b0ac2a02-ed4a-41f6-a7a9-aad78a2310a5)
-
 - **Controller – Order**
   ![Order Controller](https://github.com/user-attachments/assets/d5edb143-1241-4b78-aaae-a7dd30cf32f8)
-
 - **Migration – Bảng Order**
   ![Order Table](https://github.com/user-attachments/assets/1662403c-cf90-4dbf-bfb7-3ae531477a50)
-
 - **Giao diện – Thanh toán**
   ![Payment Blade](https://github.com/user-attachments/assets/454dac45-6d1a-4ea8-ace0-84e9fd694d18)
 
